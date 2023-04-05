@@ -1,4 +1,4 @@
-# Prediction of the Amazon share price trend and analysis of a promotional campaign banking via the Python language
+# Prediction of the Amazon share price trend and analysis of a promotional campaign banking with Python
 
 ## 1. Introduction
 The following report illustrates the project we carried out in the field of
@@ -288,3 +288,277 @@ presence of exogenous factors, one might think of refining an analysis of
 this type of analysis with a SARIMAX-type model. For example, one could
 consider other economic indices, such as interest rates, gold, oil,
 inflation, the VIX.
+
+## 4. Classification and Clustering
+### 4.1 Descriptive analysis
+
+The first step in this phase of the project involved carrying out
+descriptive analyses, i.e. all those analyses designed to illustrate the nature of the
+dataset, showing its composition and highlighting any correlations.
+
+We therefore focused initially on this phase of Data
+Understanding, going to examine the dataset from various points of view. Of
+below are some of the analyses carried out in order to have a better view of the dataset.
+better view of the dataset.
+
+The first was an analysis concerning the average duration of the
+advertising calls on a time basis (division by months). The 'duration' column
+represents a crucial piece of information, as in the
+vast majority of cases, if a customer stays on the phone listening
+listening to an advertising message implies that there is some interest on their part in the service offered.
+towards the service offered. The average duration calculation showed that in the
+months prior to winter there is a slight increase in the latter
+value, peaking in December; this could be explained by considering that the period around
+explained by the fact that the period around Christmas has always been
+characterised by an increase in average expenditure (Figure 21 ).
+
+A second group of analyses concerned the general characteristics of the
+people affected by the advertising campaign. There are pie-
+charts representing different customer characteristics, such as
+sector of work, age group, marital status and level of education. This
+characterisation of the records in the dataset allows a clearer view of the
+a clearer view of the people covered by the survey, and makes it possible to
+understand which fields are the most relevant in order to carry out the
+classification and segmentation.
+
+A final example that may be useful for understanding the dataset
+concerns the analysis carried out with regard to the amount of customer budgets. Of
+fact, the focus at this stage was to observe the amount of average bank credit as the
+average bank credit as certain characteristics of the persons
+concerned. The most surprising fact that emerged from this analysis concerned the
+people of an older age. In fact, it seems that senior citizens are
+those with a higher average balance than all the other categories;
+this can be seen from the bar graphs shown, where it is clear that people
+between 71 and 80 years of age are those with the richest bank accounts (Figure 26).
+richest bank accounts (Figure 26 ); this behaviour is confirmed by looking at the average balance
+average balance per occupation (Figure 27 ), where it can be seen that the
+people who have now retired from work (often pensioners) have a higher average
+higher average than all other classes.
+
+### 4.2 Classification
+
+The main purpose of classification is to assign a category
+to a set of input elements. This is a task that, depending on the
+techniques used, may fall into supervised or unsupervised learning.
+
+The algorithms (given below) used all fall into the category of
+supervised learning:
+
+- Logistic Regression
+- Decision Tree
+- Support Vector Classifier (SVC)
+- Random Forest
+- AdaBoost
+- Gradient Boosting
+- Classification resulting from Linear Discriminative Analysis
+
+Our desired classification concerns the _term_deposit_ attribute in the dataset.
+present in the dataset; in fact, given the profile of a client (feature values)
+the objective was to understand whether the latter would be able to entrust the bank with a
+bank a deposit in the long term. Consequently, the task performed was
+a binary classification task between the label "Yes" (the customer could
+make a long-term deposit) and the label "No" (the customer will not
+entrust the bank with a long-term deposit).
+
+As mentioned earlier, the algorithms used are all supervised
+supervised learning, consequently the quality of the final models depends
+strongly on the composition and goodness of the training dataset. In this
+in this regard, a problem that became apparent from the earliest stages was that of class-imbalance.
+was that of class imbalance; this means that in the starting dataset there was a very strong
+there was a very strong imbalance between the class "Yes" and the class "No".
+In most cases, this can lead to final models
+characterised by the dominance of a bias that would tend the
+classification towards the majority class. For example, if we were to have
+a dataset composed of 999 class 1 elements and only one element of
+class 2, the classifier produced by training on that dataset would indistinctly label
+indistinctly all the inputs as belonging to class 1.
+
+In our case, model training on the starting dataset did not produce such extreme
+such extreme results; on the contrary, the latter were from the outset
+quite satisfactory, showing a general accuracy of around 90%.
+
+The problem related to class-imbalance was more apparent after calculating
+the precision and recall metrics by individual class using Logistic
+Regression. In fact, doing so showed that the precision value for the
+class 1 (Si) was quite disappointing, hovering around 58%; this
+indicates that when the classifier labels with class 1, it is wrong almost
+half of the time. However, the most serious metric was recall, at 17%; this
+means that out of the total number of 'interesting' customers, only 17% were
+correctly identified as such. In contrast, both metrics
+relative to the majority class were satisfactory and well over
+above 90%.
+
+### 4.3 Approach to class-imbalance
+
+In order to have a more balanced dataset, it is necessary to adopt techniques
+to have a better balance between classes. The first
+approach we have adopted is that of _metacost_.
+
+**Metacost**
+
+This is a meta-algorithm that functions as an extension to existing approaches
+existing approaches and its objective is to relabel the dataset so that
+this becomes balanced again. The first step in applying the meta
+cost consists of generating _m_ training sets from the initial one with the
+bootstrap technique (random extraction with reinsertion). This is done,
+_m_ models are trained using the chosen algorithm on the _m_ datasets
+generated; each _x_ element of the initial dataset is labelled by all _m_
+models, generating _m_ generically different predictions. The final
+final probabilities for each class _P(j|x)_ as the sum of the number of times that
+_x_ was labelled as belonging to class _j_. This is done by calculating the
+cost of reassigning element _x_ to class _i_ (using the formula
+below for each class _i_ ) the new label of _x_ is found.
+
+That is, _x_ will be relabelled as class _i_ , where the latter minimises the
+summation of the products of the costs of confounding i with each of the
+other classes by the probabilities of all the other classes. Having relabelled all the
+elements of the starting dataset, the metacost returns the model _M_ obtained
+by applying the algorithm chosen at the start to the relabelled dataset.
+
+Having chosen an implementation of the metacost, error costs
+equal to 4 in the case of class 1 (Yes) and equal to 1 in the case of class 0 (No); the value
+4 causes the error in the case of class 1 to be judged heavier in the
+training.
+
+The results in terms of accuracy, precision and recall are shown below and,
+as can be seen, the improvements are considerable.
+
+**Manual balancing**
+
+Another approach taken is manual _sampling_. For
+first, an undersampling of the majority class was performed,
+respecting the distribution of the dataset, so as to decrease it to approximately one
+third of the original size. Next, an
+oversampling was applied to the minority class, so that the two classes had the
+same number of elements.
+
+At this point, the models were trained and the same metrics were calculated as before.
+same metrics as previously seen. Generally, the results are
+sufficiently good, but the best performance is obtained with the Random
+Forest (Figure 31 ): accuracy settles at 0.95, precision and recall are
+between 0.92 and 0.98.
+
+The confusion matrices (Figure 32 ) show that the models trained and
+tested have more or less similar behaviour, although in general the
+classification trees (thus also the Random Forest) predict the
+better. In the confusion matrix, we represent on the rows the
+current values and on the columns the predicted values.
+
+Another useful method for evaluating the models obtained is the ROC curves
+curves (Figure 33 ). In general, the ROC curve shows the performance of a model
+classification considering all possible classification thresholds. This
+curve represents two parameters: _True Positive Rate_ and _False Positive Rate_.
+
+Subsequently, the presence of correlation between the
+prediction models (Figure 34 ). In detail, the trees are correlated with the Random
+Forest, while there is some correlation between the logistic regression model
+logistic regression model, the Gradient Boosting classifier and LDA.
+
+### 4.4 Clustering
+
+The second type of task tackled in this project was the
+clustering. This indicates the operation of dividing a set of elements
+provided as input into subgroups that have certain characteristics in common.
+This division into clusters takes place in the feature space. The latter
+is defined as a space having as dimensions the characteristics that
+distinguish the elements of our dataset (features). In this type of
+In this type of task, the choice of these features is of fundamental importance, i.e. on which of them to base the division.
+which of them to base the division on.
+
+There are various types of algorithms designed to perform clustering, but
+the one chosen is K-Means. The latter falls into the category of
+prototype-based, i.e. those that are based on moving the centroids
+of the cluster (centre points) and define the membership of an element in
+a cluster based on the nearest centroid.
+
+In the case of K-means there is an initialisation of the centroids, and a
+a first problem arises, namely how many centroids (i.e. clusters)
+must be predicted. The easiest method to find an answer is called the
+"Elbow Method'. This method consists of applying the k-means algorithm
+by increasing the number of clusters used each time. Then, for each
+of the segmentations obtained, the average coefficient of
+distortion in the clusters obtained; one can think of this value as the
+average distance of a point from the centre of the assigned cluster.
+
+Plotting the course of the distortion as a function of the number
+(increasing) number of clusters used, one will notice both that the average distance is initially
+very high (few clusters) and that it has, in the early stages, a strong
+tendency to decrease. When a sufficient number of
+clusters the distortion stabilises, this is because the segments obtained are
+such a small size that subdividing them further does not lead to any
+substantial changes in the distortion coefficient. Having obtained
+this curve, the suitable number of clusters is identified by the point at which
+the curve changes from a steep descent to a more stable situation.
+of greater stability.
+
+As can be seen, the suitable number of clusters for our dataset
+appears to be between 3 and 7 (red area in Figure 35 ).
+
+A second check that can be carried out, in order to identify the most suitable number of
+suitable number of sub-clusters is the one concerning the _coefficient silhouette_ (Figure 36 )._
+This coefficient varies between 1 and -1. Numbers close to 1 indicate that the
+elements are closer to the centre of their cluster than to the centres of the
+surrounding clusters (neighbouring clusters). Scrolling again through the various
+various cluster numbers calculating each time, this coefficient will give us
+a second confirmation as to how many clusters to use.
+
+The analysis of the silhouette coefficient indicates that, as the number of
+clusters, there is an almost linear worsening of this value. This means
+that we should choose as few segments as possible.
+Considering also the analysis using the elbow curve, we chose a
+number of clusters **no more than 4.
+
+Having carried out several tests with different numbers of clusters, we obtain a
+discrete segmentation of the dataset with 4 clusters (Figure 37 ).
+
+As can be seen, the quality of the segmentation is not optimal and the
+silhouette lies between 0.5 and 0.6. In particular, the
+feature pairs 'age' - 'balance' and 'balance' - 'duration' were considered, since with the
+other categorical features, the resulting clustering presented clusters
+clustered for the values of the latter. With this configuration, one can
+identify four clusters corresponding to four income bands.
+Firstly, cluster 2 is representative of the poor bracket (around 0,
+also including lower values), cluster 4 represents the middle- to low
+low bracket (close to € 20000), cluster 3 corresponds to the richest bracket,
+while cluster 1 represents the upper-middle class.
+
+As the dataset contains a large amount of items, it was decided to
+take a smaller sample, respecting the original distribution.
+Therefore, a reduction of the dataset was implemented and the K-
+means on 150 points. Thus, the same pairs of features were considered as previously
+features as seen before and four clusters were obtained again,
+with the resulting silhouette being approximately 0. 63. As can be seen in
+Figure 38 , the clusters identified define the same four groupings
+previously described. In this case, there is a sharper division
+of the clusters and it can be seen that cluster 2, i.e. the one representing the
+poorest bracket, is much more compact than the other three.
+
+Having considered three features with three different scales, a
+normalisation was carried out to mitigate the unbalancing effect of the weight given to the
+values of the features. Thus, we verified the presence of differences between
+the clusters before and after normalisation on the 150 features. In Figure 39 ,
+it can be seen that the clusters are very similar to those previously
+identified. In fact, cluster 2, i.e. the one representing the poorest
+poorer, unlike without normalisation, is more
+distant from cluster 4, which identifies the lower-middle band. On the other hand, as
+with regard to the other clusters, there is less separation, as the
+proximity between cluster 1 and cluster 3 is due to the presence of more
+number of elements following normalisation. Furthermore, unlike
+seen previously, the cluster representing the highest band
+appears to be more compact. In the same image, an
+interesting situation regarding the relationship between "balance" and "duration";
+In fact, the middle (medium and low) clusters have a greater interest in the
+campaign, as evidenced by a longer stay on the telephone
+telephone, compared to the extremes, since in most cases the richer
+already have long-term deposits and the poorest have no resources.
+
+
+To conclude, we would like to draw attention to the composition of the dataset
+chosen. The characteristics of the latter do not favour the execution of an
+unsupervised task, such as clustering, as, in the feature space, there is a very dense distribution of samples.
+features, there is a very dense distribution of samples. This
+observation is demonstrated by the fact that the execution of density
+based algorithms, such as DBSCAN, based only on the distance separating the
+elements, clusters all the samples into a single cluster.
+
+#### _Disclaimer: images in the text refer to 'Relazione_Qlik_Tableau_PowerBI.pdf' file_

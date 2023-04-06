@@ -173,8 +173,8 @@ Therefore, a differentiation of the series is performed, of first and
 second order. After this, the ADF test is performed on the latter two series
 obtained, obtaining:
 
-- differentiated series I order: ADF statistics: -25.37 1 , p-value: 0.0;
-- differentiated series 2nd order: ADF statistics: -11.7 50 , p-value; 1.2*10-^21 ;
+- differentiated series I order: ADF statistics: -25.371, p-value: 0.0;
+- differentiated series 2nd order: ADF statistics: -11.750, p-value; ${ 1.2 \times 10^{-21} }$ ;
 
 From these tests, first-order differentiation can be considered, as
 further differentiation could result in the loss of features
@@ -187,7 +187,7 @@ SARIMA model. Generally, an ARIMA model is characterised by three
 parameters, namely **p** (Auto Regressive), **q** (Moving Average) and **d** (Integrated), which
 which can be calculated using certain tests, such as the ADF test.
 
-Having already performed this test, it can be assumed that 𝑑= 1 , as the p-
+Having already performed this test, it can be assumed that 𝑑=1 , as the p-
 value corresponding to the one-time differentiated series is less than 0.05.
 
 In order to evaluate p and q, the autocorrelation
@@ -200,7 +200,7 @@ to remove any autocorrelation in the stationary series, so 𝑞= 1.
 
 ### 3.4 ARIMA model
 
-Since the characteristic parameters have been evaluated (𝑝= 1 ,𝑑= 1 ,𝑞= 1 ), we
+Since the characteristic parameters have been evaluated (𝑝=1,𝑑=1,𝑞=1), we
 proceeded to create and train the ARIMA model.
 
 The first prediction was calculated using the _predict()_ method, whose
@@ -235,12 +235,12 @@ refer to the seasonal component. The construction and training of the
 model is carried out as before, implementing the same
 division of the dataset into training and testing set.
 
-We consider the configuration (1,1,1)x( 1 , 3 , 4 ,5) and can observe in (Figure
-15 ) that the prediction follows the trend; in fact, initially the first
+We consider the configuration (1,1,1)x(1,3,4,5) and can observe in (Figure
+15) that the prediction follows the trend; in fact, initially the first
 _bottom_ , then the curve stabilises, without predicting the final peak.
 
 Subsequently, a different configuration of the
-SARIMA model, namely (1,1,1)x( 10 ,3, 7 ,5). In this case (Figure 16 ), we
+SARIMA model, namely (1,1,1)x(10,3,7,5). In this case (Figure 16), we
 notice that, due to the MA terms, there is a higher fidelity towards the movements
 of the actual curve (more evident peaks). On the other hand, there is a translation
 of the declines and rises, even though these follow the course of the curve, which
@@ -251,28 +251,28 @@ which is within the confidence interval (95%).
 Having obtained the models, one can proceed with the analysis of residuals. In fact, it is
 possible to identify any correlations or if there is information
 that could be useful for forecasting. For the first SARIMA model
-(Figure 17 ), it can be seen that the residuals stabilise, as is also shown by the
+(Figure 17), it can be seen that the residuals stabilise, as is also shown by the
 slightly shifted distribution compared to the normal distribution. However, one can
 notice from the correlogram that correlations are present between the first residuals.
 
 With regard to the second SARIMA model, one can see a situation very similar to the previous one (Figure 18).
-similar to the previous one (Figure 18 ). In contrast, however, to the configuration
+similar to the previous one (Figure 18). In contrast, however, to the configuration
 (1,1,1)x(1,3,4,5) configuration, in this case the correlogram does not show any particular
 anomalies and the distribution is much more similar to a Gaussian.
 
 To measure the goodness of prediction, a number of metrics were used,
 namely the MAPE (Mean Absolute Percentage Error), the ME (Mean Error), the
 MAE (Mean Absolute Error), the MPE (Mean Percentage Error), the RMSE (Root
-Mean Squared Error ), the ACF (autocorrelation of the error for lag( _1_ )), the
+Mean Squared Error), the ACF (autocorrelation of the error for lag( _1_ )), the
 correlation between the series and the prediction, the MINMAX error.
 
 Considering the SARIMA(1,1,1)x(1,3,4,5) model, as can be seen in
-Figure 19 , it can be seen that the MAPE equals 0.077, the RMSE equals
+Figure 19, it can be seen that the MAPE equals 0.077, the RMSE equals
 277.5, while the CORR stands at 0.31.
 
 On the other hand, with regard to SARIMA (1,1,1)x(0,3,7,5), we have MAPE and
 RMSE of 0.167 and 532.2 respectively, while the CORR is equal to
-0.45 1.
+0.451.
 
 Thus, from the evaluation metrics, it can be asserted that the first model
 model is more accurate in general, while in the second model there is a
@@ -310,7 +310,7 @@ towards the service offered. The average duration calculation showed that in the
 months prior to winter there is a slight increase in the latter
 value, peaking in December; this could be explained by considering that the period around
 explained by the fact that the period around Christmas has always been
-characterised by an increase in average expenditure (Figure 21 ).
+characterised by an increase in average expenditure (Figure 21).
 
 A second group of analyses concerned the general characteristics of the
 people affected by the advertising campaign. There are pie-
@@ -331,7 +331,7 @@ those with a higher average balance than all the other categories;
 this can be seen from the bar graphs shown, where it is clear that people
 between 71 and 80 years of age are those with the richest bank accounts (Figure 26).
 richest bank accounts (Figure 26 ); this behaviour is confirmed by looking at the average balance
-average balance per occupation (Figure 27 ), where it can be seen that the
+average balance per occupation (Figure 27), where it can be seen that the
 people who have now retired from work (often pensioners) have a higher average
 higher average than all other classes.
 
@@ -492,10 +492,10 @@ the curve changes from a steep descent to a more stable situation.
 of greater stability.
 
 As can be seen, the suitable number of clusters for our dataset
-appears to be between 3 and 7 (red area in Figure 35 ).
+appears to be between 3 and 7 (red area in Figure 35).
 
 A second check that can be carried out, in order to identify the most suitable number of
-suitable number of sub-clusters is the one concerning the _coefficient silhouette_ (Figure 36 )._
+suitable number of sub-clusters is the one concerning the _coefficient silhouette_ (Figure 36).
 This coefficient varies between 1 and -1. Numbers close to 1 indicate that the
 elements are closer to the centre of their cluster than to the centres of the
 surrounding clusters (neighbouring clusters). Scrolling again through the various
@@ -527,7 +527,7 @@ take a smaller sample, respecting the original distribution.
 Therefore, a reduction of the dataset was implemented and the K-
 means on 150 points. Thus, the same pairs of features were considered as previously
 features as seen before and four clusters were obtained again,
-with the resulting silhouette being approximately 0. 63. As can be seen in
+with the resulting silhouette being approximately 0.63. As can be seen in
 Figure 38 , the clusters identified define the same four groupings
 previously described. In this case, there is a sharper division
 of the clusters and it can be seen that cluster 2, i.e. the one representing the
@@ -536,7 +536,7 @@ poorest bracket, is much more compact than the other three.
 Having considered three features with three different scales, a
 normalisation was carried out to mitigate the unbalancing effect of the weight given to the
 values of the features. Thus, we verified the presence of differences between
-the clusters before and after normalisation on the 150 features. In Figure 39 ,
+the clusters before and after normalisation on the 150 features. In Figure 39,
 it can be seen that the clusters are very similar to those previously
 identified. In fact, cluster 2, i.e. the one representing the poorest
 poorer, unlike without normalisation, is more

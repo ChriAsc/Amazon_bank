@@ -561,4 +561,4 @@ observation is demonstrated by the fact that the execution of density
 based algorithms, such as DBSCAN, based only on the distance separating the
 elements, clusters all the samples into a single cluster.
 
-#### _Disclaimer: images in the text refer to 'Relazione_ClassificationTimeSeries.pdf' file_
+#### _Disclaimer: in-text images refer to 'Relazione_ClassificationTimeSeries.pdf' file_

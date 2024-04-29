@@ -1,4 +1,4 @@
-# Prediction of the Amazon share price trend and analysis of a promotional campaign banking with Python
+# Prediction of the Amazon share price trend and analysis of a promotional banking campaign with Python
 
 ## 1. Introduction
 The following report illustrates the project we carried out in the field of
